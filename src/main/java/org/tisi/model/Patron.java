@@ -12,10 +12,10 @@ public class Patron {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patronid")
-    private Long authorId;
+    private Long patronId;
 
     @Column(name = "name")
-    private String authorName;
+    private String patronName;
 
     @Column(name = "email")
     private String email;
