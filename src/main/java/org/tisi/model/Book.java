@@ -3,6 +3,9 @@ package org.tisi.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 
 @NoArgsConstructor
@@ -31,4 +34,12 @@ public class Book {
 
     @Column(name = "availableQuantity")
     private short availableQuantity;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "AuthorToBook",
+            joinColumns = @JoinColumn(name = "authorId"),
+            inverseJoinColumns = @JoinColumn(name = "bookId")
+
+    )
+    private Set<Author> authors = new HashSet<>();
 }

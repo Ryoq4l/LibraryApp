@@ -2,6 +2,7 @@ package org.tisi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -9,7 +10,7 @@ import lombok.*;
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "authorid")
+    @Column(name = "authorId")
     private Long authorId;
 
     @Column(name = "name")
@@ -17,5 +18,6 @@ public class Author {
 
     @Column(name = "bio")
     private String bio;
-
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books;
 }

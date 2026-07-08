@@ -1,10 +1,10 @@
 package org.tisi.repository;
 
-import org.tisi.model.Book;
+import org.tisi.model.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface AuthorRepository  extends JpaRepository <Author, Long>{
 
 }
