@@ -11,18 +11,18 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "author")  // ← маленькая буква
+@Table(name = "author")
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id")  // ← snake_case
+    @Column(name = "author_id")
     private Long authorId;
 
     @Column(name = "name", nullable = false)
     private String authorName;
 
-    @Column(name = "biography")  // ← snake_case
+    @Column(name = "biography")
     private String bio;
 
     @ManyToMany(mappedBy = "authors")
