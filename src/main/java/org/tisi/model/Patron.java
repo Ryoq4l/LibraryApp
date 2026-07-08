@@ -1,10 +1,13 @@
 package org.tisi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -27,5 +30,9 @@ public class Patron {
     @CreationTimestamp
     @Column(name = "registrartionDate")
     private LocalDate registrationDate;
+
+    @OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Book> borrowedBooks = new ArrayList<>();
 
 }

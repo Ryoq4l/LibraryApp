@@ -34,6 +34,10 @@ public class Book {
     @Column(name = "available_quantity")
     private Integer availableQuantity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "borrowed_by")
+    private Patron borrowedBy;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_author",
