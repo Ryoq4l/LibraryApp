@@ -2,6 +2,7 @@ package org.tisi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -20,10 +21,11 @@ public class Patron {
     @Column(name = "email")
     private String email;
 
-    @Column (name = "phone")
+    @Column(name = "phone")
     private String phoneNumber;
 
-    @Column (name = "registrartionDate")
+    @CreationTimestamp
+    @Column(name = "registrartionDate")
     private LocalDate registrationDate;
 
 }
