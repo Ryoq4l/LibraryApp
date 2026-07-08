@@ -13,11 +13,11 @@ import java.util.List;
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
-    private final BookRepository book_repo;
+    private final BookRepository bookRepo;
 
     @GetMapping
     public List<Book> getAllBooks() {
-        return book_repo.findAll();
+        return bookRepo.findAll();
     }
 
 }
