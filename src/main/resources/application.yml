@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/library_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/library_db
     username: library_user
-    password: 12345
+    password: strong_password
     driver-class-name: com.mysql.cj.jdbc.Driver
     
     hikari:
@@ -28,9 +28,9 @@ server:
         connection:
           autocommit: false
 
-logging:
+ogging:
   level:
+    org.hibernate: DEBUG
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    org.springframework.web: INFO
-    org.springframework.jdbc: DEBUG
+    org.hibernate.tool.hbm2ddl: DEBUG
+    org.springframework.orm.jpa: DEBUG

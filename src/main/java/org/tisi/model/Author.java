@@ -2,22 +2,31 @@ package org.tisi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "author")
+@Table(name = "author")  // ← маленькая буква
 public class Author {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "authorId")
+    @Column(name = "author_id")  // ← snake_case
     private Long authorId;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String authorName;
 
-    @Column(name = "bio")
+    @Column(name = "biography")  // ← snake_case
     private String bio;
+
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books;
+
+    @JsonIgnore
+    private Set<Book> books = new HashSet<>();
 }
