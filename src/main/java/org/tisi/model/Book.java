@@ -2,33 +2,48 @@ package org.tisi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
-
-@Table(name = "Book")
+@Table(name = "book")
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bookid")
-    private long bookId;
+    @Column(name = "book_id")
+    private Long bookId;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "isbn", columnDefinition = "Char(13)", nullable = false, unique = true)
+    @Column(name = "isbn", length = 13, nullable = false, unique = true)
     private String isbn;
 
-    @Column(name = "year")
-    private short publicationYear;
+    @Column(name = "publication_year")
+    private Integer publicationYear;
 
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "availableQuantity")
-    private short availableQuantity;
+    @Column(name = "available_quantity")
+    private Integer availableQuantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "borrowed_by")
+    private Patron borrowedBy;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    @JsonIgnoreProperties("books")
+    private Set<Author> authors = new HashSet<>();
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Читатели - Библиотечная система</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <span class="logo-icon">📚</span>
+            <span class="logo-text">Библиотека</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/" class="nav-link">Главная</a></li>
+            <li class="nav-item"><a href="/pages/books.html" class="nav-link">Книги</a></li>
+            <li class="nav-item"><a href="/pages/patrons.html" class="nav-link active">Читатели</a></li>
+            <li class="nav-item"><a href="/pages/authors.html" class="nav-link">Авторы</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <div class="header-left">
+                <h1 class="page-title">Читатели</h1>
+                <p class="page-subtitle">Управление читателями библиотеки</p>
+            </div>
+        </div>
+
+        <!-- Поиск -->
+        <div class="search-section">
+            <input type="text" id="searchInput" class="search-input" placeholder="Поиск читателей по имени или email...">
+        </div>
+
+        <!-- Таблица читателей -->
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Телефон</th>
+                    <th>Дата регистрации</th>
+                </tr>
+                </thead>
+                <tbody id="patronsTableBody">
+                <!-- Данные загружаются из API -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 Библиотечная система. Все права защищены.</p>
+    </div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
