@@ -13,4 +13,5 @@ public class BookDto {
     private String author;
     private String isbn;
     private Integer year;
+    private String borrowedBy;
 }
