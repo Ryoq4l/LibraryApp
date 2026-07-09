@@ -19,13 +19,6 @@ import java.util.stream.Collectors;
 
 public class PatronController {
     private final PatronRepository patronRepo;
-    @GetMapping
-    public List<PatronDto> getAllPatrons() {
-        return Arrays.asList(
-                new PatronDto(1L, "Иван Петров", "ivan@example.com", "+7-900-111-11-11", LocalDate.now().minusDays(30)),
-                new PatronDto(2L, "Мария Смирнова", "maria@example.com", "+7-900-222-22-22", LocalDate.now().minusDays(15)),
-                new PatronDto(3L, "Алексей Иванов", "alex@example.com", "+7-900-333-33-33", LocalDate.now().minusDays(5))
-        );
-    }
+
 }
 

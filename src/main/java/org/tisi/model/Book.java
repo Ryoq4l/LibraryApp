@@ -16,7 +16,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
+    @Column (name = "bookid")
     private Long bookId;
 
     @Column(name = "title", nullable = false)
@@ -33,10 +33,6 @@ public class Book {
 
     @Column(name = "available_quantity")
     private Integer availableQuantity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "borrowed_by")
-    private Patron borrowedBy;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

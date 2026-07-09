@@ -1,12 +1,12 @@
 package org.tisi.repository;
 
-import org.springframework.data.jpa.repository.Query;
-import org.tisi.model.Book;
+import org.tisi.model.BorrowRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BorrowRepository extends JpaRepository<BorrowRecord, Long> {
+    List<BorrowRecord> findByIsReturnedFalse();
 }

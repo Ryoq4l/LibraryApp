@@ -15,7 +15,6 @@ import java.util.List;
 public class Patron {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "patronid")
     private Long patronId;
 
     @Column(name = "name")
@@ -30,9 +29,5 @@ public class Patron {
     @CreationTimestamp
     @Column(name = "registrartionDate")
     private LocalDate registrationDate;
-
-    @OneToMany(mappedBy = "borrowedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Book> borrowedBooks = new ArrayList<>();
 
 }
