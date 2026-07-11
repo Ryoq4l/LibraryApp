@@ -1,9 +1,10 @@
 package org.tisi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.stereotype.Service;
 import org.tisi.dto.AuthorDto;
+import org.tisi.mapper.AuthorMapper;
 import org.tisi.model.Author;
 import org.tisi.repository.AuthorRepository;
 
@@ -11,11 +12,10 @@ import org.tisi.repository.AuthorRepository;
 @RequiredArgsConstructor
 public class AuthorService {
     private final AuthorRepository authorRepo;
-    private final ModelMapper modelMapper;
+    private final AuthorMapper authorMapper;
 
-    public AuthorDto createAuthor(AuthorDto authorDto){
-        Author author = modelMapper.map(authorDto, Author.class);
-        Author saved = authorRepo.save(author);
-        return modelMapper.map(saved, AuthorDto.class);
+    public void createAuthor(AuthorDto authorDto){
+        Author author = authorMapper.map(authorDto);
+        authorRepo.save(author);
     }
 }
