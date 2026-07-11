@@ -1,24 +1,24 @@
 package org.tisi.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.tisi.dto.PatronDto;
-import org.tisi.repository.PatronRepository;
-import org.tisi.model.Patron;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.tisi.service.PatronService;
 
 @RestController
-@RequestMapping ("/api/patrons")
+@RequestMapping("/api/patrons")
 @RequiredArgsConstructor
 
 public class PatronController {
-    private final PatronRepository patronRepo;
+    private final PatronService patronService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createPatron(@RequestBody PatronDto patronDto) {
+        patronService.createPatron(patronDto);
+    }
+
 
 }
 
