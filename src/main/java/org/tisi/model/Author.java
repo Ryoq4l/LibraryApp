@@ -20,7 +20,7 @@ public class Author {
     @Column(name="author_id")
     private Long authorId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "author_name", nullable = false)
     private String authorName;
 
     @Column(name = "biography")

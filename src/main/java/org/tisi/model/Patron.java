@@ -15,9 +15,10 @@ import java.util.List;
 public class Patron {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "patron_id")
     private Long patronId;
 
-    @Column(name = "name")
+    @Column(name = "patron_name")
     private String patronName;
 
     @Column(name = "email")
@@ -27,7 +28,7 @@ public class Patron {
     private String phoneNumber;
 
     @CreationTimestamp
-    @Column(name = "registrartionDate")
+    @Column(name = "registrartion_date")
     private LocalDate registrationDate;
 
 }
