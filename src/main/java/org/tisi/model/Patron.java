@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "patron")
 public class Patron {
@@ -30,5 +32,9 @@ public class Patron {
     @CreationTimestamp
     @Column(name = "registrartion_date")
     private LocalDate registrationDate;
+
+    @OneToMany (mappedBy = "patron", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<BorrowRecord> borrowRecords = new ArrayList<>();
 
 }

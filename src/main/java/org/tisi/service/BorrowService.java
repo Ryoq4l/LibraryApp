@@ -1,7 +1,9 @@
 package org.tisi.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.tisi.dto.BorrowDto;
 import org.tisi.mapper.BorrowMapper;
 import org.tisi.model.Book;
@@ -11,15 +13,17 @@ import org.tisi.repository.BorrowRepository;
 import org.tisi.repository.BookRepository;
 import org.tisi.repository.PatronRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BorrowService {
     private final BorrowRepository borrowRepo;
-    private PatronRepository patronRepo;
+    private final PatronRepository patronRepo;
     private final BookRepository bookRepo;
     private final BorrowMapper borrowMapper;
 
-
+    @Transactional
     public void createBorrowRecord(BorrowDto borrowDto) {
         Book book = bookRepo.findById(borrowDto.bookId())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
@@ -35,5 +39,11 @@ public class BorrowService {
         bookRepo.save(book);
 
         borrowRepo.save(borrowRecord);
+    }
+    public List<BorrowRecord> getBorrowRecordsByPatronId(Long patronId){
+        patronRepo.findById(patronId)
+                .orElseThrow(() -> new RuntimeException("No patron found"));
+        return borrowRepo.findByPatronIdWithDetails(patronId);
+
     }
 }
