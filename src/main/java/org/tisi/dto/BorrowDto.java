@@ -16,4 +16,4 @@ public record BorrowDto(
         LocalDate dueDate,
         LocalDate returnDate,
         boolean isReturned
-) {}
+) { }
