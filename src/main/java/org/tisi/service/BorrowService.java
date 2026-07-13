@@ -39,10 +39,11 @@ public class BorrowService {
 
         borrowRepo.save(borrowRecord);
     }
+
     public List<BorrowDto> getBorrowRecordsByPatronId(Long patronId) {
         patronRepo.findById(patronId)
                 .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
-List<BorrowRecord> records = borrowRepo.findByPatronIdWithDetails(patronId);
+        List<BorrowRecord> records = borrowRepo.findByPatronIdWithDetails(patronId);
         return records.stream()
                 .map(borrowMapper::toDto)
                 .collect(Collectors.toList());
