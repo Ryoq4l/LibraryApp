@@ -1,5 +1,6 @@
 package org.tisi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,4 +43,8 @@ public class Book {
     )
     @JsonIgnoreProperties("books")
     private Set<Author> authors = new HashSet<>();
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<BorrowRecord> borrowRecords = new HashSet<>();
 }
