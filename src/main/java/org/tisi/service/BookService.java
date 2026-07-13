@@ -14,6 +14,7 @@ import org.tisi.repository.PatronRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -41,6 +42,20 @@ public class BookService {
                 .orElseThrow(() -> new RuntimeException("book not found with id: " + id));
         return bookMapper.toDto(book);
 
+    }
+    public List<BookDto> getAllBooks() {
+        return bookRepo.findAll().stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
+    }
+    public List<BookDto> searchBooksByTitle(String title) {
+        if (title == null || title.trim().isEmpty()) {
+            return getAllBooks();
+        }
+
+        return bookRepo.findByTitleContainingIgnoreCase(title).stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
 
