@@ -1,4 +1,4 @@
-package org.tisi.dto;
+package org.tisi.dto.criteria;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
