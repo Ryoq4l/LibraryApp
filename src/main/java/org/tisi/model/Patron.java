@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -17,7 +18,7 @@ import java.util.List;
 public class Patron {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "patron_id")
+    @Column(name = "patron_id")
     private Long patronId;
 
     @Column(name = "patron_name")
@@ -33,7 +34,7 @@ public class Patron {
     @Column(name = "registrartion_date")
     private LocalDate registrationDate;
 
-    @OneToMany (mappedBy = "patron", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patron", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<BorrowRecord> borrowRecords = new ArrayList<>();
 
