@@ -3,6 +3,7 @@ package org.tisi.dto;
 import lombok.Builder;
 
 import java.time.LocalDate;
+
 @Builder
 public record BorrowDto(
         Long id,
@@ -18,4 +19,5 @@ public record BorrowDto(
         LocalDate dueDate,
         LocalDate returnDate,
         boolean isReturned
-) { }
+) {
+}
