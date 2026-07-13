@@ -2,7 +2,9 @@ package org.tisi.dto;
 
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record BookDto(
         Long bookId,
         String title,
@@ -12,4 +14,5 @@ public record BookDto(
         Integer publicationYear,
         Integer quantity,
         Integer availableQuantity
-) {}
+) {
+}
