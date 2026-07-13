@@ -12,6 +12,7 @@ import org.tisi.repository.BorrowRepository;
 import org.tisi.repository.PatronRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -33,6 +34,13 @@ public class BookService {
         Book book = bookMapper.map(bookDto, authors);
 
         bookRepo.saveAndFlush(book);
+    }
+
+    public BookDto getBookById(Long id) {
+        Book book = bookRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("book not found with id: " + id));
+        return bookMapper.toDto(book);
+
     }
 }
 
