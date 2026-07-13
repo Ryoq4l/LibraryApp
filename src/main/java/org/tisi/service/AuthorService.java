@@ -14,8 +14,14 @@ public class AuthorService {
     private final AuthorRepository authorRepo;
     private final AuthorMapper authorMapper;
 
-    public void createAuthor(AuthorDto authorDto){
+    public void createAuthor(AuthorDto authorDto) {
         Author author = authorMapper.map(authorDto);
         authorRepo.save(author);
+    }
+
+    public AuthorDto getAuthorById(Long id) {
+        Author author = authorRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Author not found with id: " + id));
+        return authorMapper.toDto(author);
     }
 }
