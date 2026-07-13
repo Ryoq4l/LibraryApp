@@ -1,7 +1,9 @@
 package org.tisi.dto;
 
-import java.time.LocalDate;
+import lombok.Builder;
 
+import java.time.LocalDate;
+@Builder
 public record BorrowDto(
         Long id,
         Long bookId,
