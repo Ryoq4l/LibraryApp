@@ -21,7 +21,7 @@ public class BorrowController {
         borrowService.createBorrowRecord(borrowDto);
     }
     @GetMapping("/patrons/{patronId}")
-    public List<BorrowRecord> getBorrowRecordsByPatronId(@PathVariable Long patronId){
+    public List<BorrowDto> getBorrowRecordsByPatronId(@PathVariable Long patronId){
         return borrowService.getBorrowRecordsByPatronId(patronId);
     }
 }
