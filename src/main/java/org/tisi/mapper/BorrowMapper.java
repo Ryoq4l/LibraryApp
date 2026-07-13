@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Component
 public class BorrowMapper {
-    public BorrowRecord map (BorrowDto dto, Book book, Patron patron) {
+    public BorrowRecord map(BorrowDto dto, Book book, Patron patron) {
         if (dto == null) return null;
 
         LocalDate borrowDate = dto.borrowDate() != null ? dto.borrowDate() : LocalDate.now();
@@ -25,8 +25,9 @@ public class BorrowMapper {
                 .isReturned(false)
                 .build();
     }
-    public BorrowDto toDto(BorrowRecord entity){
-        if(entity == null) return null;
+
+    public BorrowDto toDto(BorrowRecord entity) {
+        if (entity == null) return null;
         return BorrowDto.builder()
                 .id(entity.getId())
                 .bookId(getBookId(entity))
@@ -44,29 +45,37 @@ public class BorrowMapper {
 
                 .build();
     }
-    private Long getBookId(BorrowRecord entity){
-        return entity.getBook() != null ? entity.getBook().getBookId(): null;
+
+    private Long getBookId(BorrowRecord entity) {
+        return entity.getBook() != null ? entity.getBook().getBookId() : null;
     }
-    private String getTitle (BorrowRecord entity){
-        return entity.getBook() != null ? entity.getBook().getTitle(): null;
+
+    private String getTitle(BorrowRecord entity) {
+        return entity.getBook() != null ? entity.getBook().getTitle() : null;
     }
-    private String getIsbn (BorrowRecord entity){
-        return entity.getBook() != null ? entity.getBook().getIsbn(): null;
+
+    private String getIsbn(BorrowRecord entity) {
+        return entity.getBook() != null ? entity.getBook().getIsbn() : null;
     }
-    private Integer getYear (BorrowRecord entity){
-        return entity.getBook() != null ? entity.getBook().getPublicationYear(): null;
+
+    private Integer getYear(BorrowRecord entity) {
+        return entity.getBook() != null ? entity.getBook().getPublicationYear() : null;
     }
-    private Long getPatronId (BorrowRecord entity){
-        return entity.getPatron() != null ? entity.getPatron().getPatronId(): null;
+
+    private Long getPatronId(BorrowRecord entity) {
+        return entity.getPatron() != null ? entity.getPatron().getPatronId() : null;
     }
-    private String getPatronName (BorrowRecord entity){
-        return entity.getPatron() != null ? entity.getPatron().getPatronName(): null;
+
+    private String getPatronName(BorrowRecord entity) {
+        return entity.getPatron() != null ? entity.getPatron().getPatronName() : null;
     }
-    private String getEmail (BorrowRecord entity){
-        return entity.getPatron() != null ? entity.getPatron().getEmail(): null;
+
+    private String getEmail(BorrowRecord entity) {
+        return entity.getPatron() != null ? entity.getPatron().getEmail() : null;
     }
-    private String getPhone (BorrowRecord entity){
-        return entity.getPatron() != null ? entity.getPatron().getPhoneNumber(): null;
+
+    private String getPhone(BorrowRecord entity) {
+        return entity.getPatron() != null ? entity.getPatron().getPhoneNumber() : null;
     }
 
 
