@@ -4,7 +4,7 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import org.tisi.dto.BookSearchCriteria;
+import org.tisi.dto.criteria.BookSearchCriteria;
 import org.tisi.model.Book;
 
 @Component
