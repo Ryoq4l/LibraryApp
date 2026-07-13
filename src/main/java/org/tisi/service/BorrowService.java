@@ -14,6 +14,7 @@ import org.tisi.repository.BookRepository;
 import org.tisi.repository.PatronRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,25 +26,25 @@ public class BorrowService {
 
     @Transactional
     public void createBorrowRecord(BorrowDto borrowDto) {
-        Book book = bookRepo.findById(borrowDto.bookId())
-                .orElseThrow(() -> new RuntimeException("Book not found"));
-        Patron patron = patronRepo.findById(borrowDto.patronId())
-                .orElseThrow(() -> new RuntimeException("Patron not found"));
-        if (book.getAvailableQuantity() == null || book.getAvailableQuantity() <= 0) {
+        Book book = bookRepo.findById(borrowDto.bookId()).orElseThrow();
+        Patron patron = patronRepo.findById(borrowDto.patronId()).orElseThrow();
+        if (book.getAvailableQuantity() <= 0) {
             throw new RuntimeException(
                     "No available copies of " + book.getTitle() + " at the moment"
             );
         }
-        BorrowRecord borrowRecord = borrowMapper.map(book, patron);
+        BorrowRecord borrowRecord = borrowMapper.map(borrowDto, book, patron);
         book.setAvailableQuantity(book.getAvailableQuantity() - 1);
         bookRepo.save(book);
 
         borrowRepo.save(borrowRecord);
     }
-    public List<BorrowRecord> getBorrowRecordsByPatronId(Long patronId){
+    public List<BorrowDto> getBorrowRecordsByPatronId(Long patronId) {
         patronRepo.findById(patronId)
-                .orElseThrow(() -> new RuntimeException("No patron found"));
-        return borrowRepo.findByPatronIdWithDetails(patronId);
-
+                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
+List<BorrowRecord> records = borrowRepo.findByPatronIdWithDetails(patronId);
+        return records.stream()
+                .map(borrowMapper::toDto)
+                .collect(Collectors.toList());
     }
 }
