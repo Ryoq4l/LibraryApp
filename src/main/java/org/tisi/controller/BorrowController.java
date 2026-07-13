@@ -20,8 +20,9 @@ public class BorrowController {
     public void createBorrowRecord(@RequestBody BorrowDto borrowDto) {
         borrowService.createBorrowRecord(borrowDto);
     }
+
     @GetMapping("/patrons/{patronId}")
-    public List<BorrowDto> getBorrowRecordsByPatronId(@PathVariable Long patronId){
+    public List<BorrowDto> getBorrowRecordsByPatronId(@PathVariable Long patronId) {
         return borrowService.getBorrowRecordsByPatronId(patronId);
     }
 }
