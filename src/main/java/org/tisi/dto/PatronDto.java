@@ -1,6 +1,7 @@
 package org.tisi.dto;
 
 import lombok.Builder;
+import lombok.NonNull;
 
 import java.time.LocalDate;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 public record PatronDto(
         Long patronId,
         String patronName,
-        String email,
+        @NonNull String email,
         String phoneNumber,
         LocalDate registrationDate
 ) {
