@@ -14,13 +14,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BorrowController {
     private final BorrowService borrowService;
-//CREATE ENDPOINT
+
+    //CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createBorrowRecord(@RequestBody BorrowDto borrowDto) {
         borrowService.createBorrowRecord(borrowDto);
     }
-//READ ENDPOINTS
+
+    //READ ENDPOINTS
     @GetMapping("/patrons/{patronId}")
     public List<BorrowDto> getBorrowRecordsByPatronId(@PathVariable Long patronId) {
         return borrowService.getBorrowRecordsByPatronId(patronId);
