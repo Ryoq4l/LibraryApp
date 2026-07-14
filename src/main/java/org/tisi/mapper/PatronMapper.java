@@ -20,7 +20,7 @@ public class PatronMapper {
                 .patronId(entity.getPatronId())
                 .patronName(entity.getPatronName())
                 .email(entity.getEmail())
-                .phoneNumber(entity.getEmail())
+                .phoneNumber(entity.getPhoneNumber())
                 .registrationDate(entity.getRegistrationDate())
                 .build();
     }
