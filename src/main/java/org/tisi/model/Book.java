@@ -1,5 +1,6 @@
 package org.tisi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,9 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.HashSet;
 import java.util.Set;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(
+        name = "book.authors",
+        attributeNodes = @NamedAttributeNode("authors")
+)
 @Entity
 @Table(name = "book")
 public class Book {
@@ -42,4 +48,8 @@ public class Book {
     )
     @JsonIgnoreProperties("books")
     private Set<Author> authors = new HashSet<>();
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<BorrowRecord> borrowRecords = new HashSet<>();
 }

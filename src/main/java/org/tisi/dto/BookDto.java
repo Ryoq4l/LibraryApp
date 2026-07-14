@@ -1,19 +1,18 @@
 package org.tisi.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class BookDto {
-    private Long bookId;
-    private String title;
-    private String authorName;
-    private Long authorId;
-    private String isbn;
-    private Integer publicationYear;
-    private Integer quantity;
-    private Integer availableQuantity;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+
+@Builder
+public record BookDto(
+        Long bookId,
+        String title,
+        String authorName,
+        @NotNull Long authorId,
+        String isbn,
+        Integer publicationYear,
+        Integer quantity,
+        Integer availableQuantity
+) {
 }

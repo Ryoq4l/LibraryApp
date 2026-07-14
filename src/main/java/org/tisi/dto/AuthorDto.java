@@ -1,14 +1,7 @@
 package org.tisi.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class AuthorDto {
-    private Long authorId;
-    private String authorName;
-    private String bio;
+@Builder
+public record AuthorDto(Long authorId, String authorName, String bio) {
 }

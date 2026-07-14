@@ -9,15 +9,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "patron")
 public class Patron {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "patron_id")
     private Long patronId;
 
-    @Column(name = "name")
+    @Column(name = "patron_name")
     private String patronName;
 
     @Column(name = "email")
@@ -27,7 +31,11 @@ public class Patron {
     private String phoneNumber;
 
     @CreationTimestamp
-    @Column(name = "registrartionDate")
+    @Column(name = "registration_date")
     private LocalDate registrationDate;
+
+    @OneToMany(mappedBy = "patron", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<BorrowRecord> borrowRecords = new ArrayList<>();
 
 }

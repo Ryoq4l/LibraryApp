@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +17,11 @@ public class BorrowRecord {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookid")
+    @JoinColumn(name = "book_id")
     private Book book;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patronid")
+    @JoinColumn(name = "patron_id")
     private Patron patron;
 
     @Column(name = "borrow_date", nullable = false)

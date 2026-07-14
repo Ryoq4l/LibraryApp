@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.tisi.dto.AuthorDto;
 import org.tisi.service.AuthorService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/authors")
 @RequiredArgsConstructor
@@ -13,9 +15,42 @@ public class AuthorController {
 
     private final AuthorService authorService;
 
+    //CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AuthorDto createAuthor(@RequestBody AuthorDto authorDto) {
-        return authorService.createAuthor(authorDto);
+    public void createAuthor(@RequestBody AuthorDto authorDto) {
+
+        authorService.createAuthor(authorDto);
+    }
+
+    //READ ENDPOINTS
+    @GetMapping
+    public List<AuthorDto> getAllAuthors() {
+        return authorService.getAllAuthors();
+    }
+
+    @GetMapping("/{authorId}")
+    public AuthorDto getAuthorById(@PathVariable Long authorId) {
+        return authorService.getAuthorById(authorId);
+    }
+
+    //UPDATE ENDPOINT
+    @PutMapping("/{authorId}")
+    public AuthorDto updateAuthor(
+            @PathVariable Long authorId,
+            @RequestBody AuthorDto authorDto) {
+        return authorService.updateAuthor(authorId, authorDto);
+    }
+
+    //DELETE ENDPOINT
+    @DeleteMapping("/{authorId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAuthor(@PathVariable Long authorId) {
+        authorService.deleteAuthor(authorId);
+    }
+
+    @GetMapping("/by-name/{authorName}")
+    public AuthorDto getAuthorByAuthorName(@PathVariable String authorName) {
+        return authorService.getAuthorByAuthorName(authorName);
     }
 }

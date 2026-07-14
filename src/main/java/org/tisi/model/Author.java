@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
 import java.util.Set;
-
-@Data
+@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -19,7 +20,7 @@ public class Author {
     @Column(name="author_id")
     private Long authorId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "author_name", nullable = false)
     private String authorName;
 
     @Column(name = "biography")
@@ -29,4 +30,13 @@ public class Author {
 
     @JsonIgnore
     private Set<Book> books = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "authorId=" + authorId +
+                ", authorName='" + authorName + '\'' +
+                ", bio='" + bio + '\'' +
+                '}';
+    }
 }
