@@ -17,13 +17,13 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final BorrowService borrowService;
-
+//CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createBook(@RequestBody BookDto bookDto) {
         bookService.createBook(bookDto);
     }
-
+//READ ENDPOINTS
     @GetMapping
     public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
@@ -38,5 +38,7 @@ public class BookController {
     public List<BookDto> searchBooksByTitle(@RequestParam String title) {
         return bookService.searchBooksByTitle(title);
     }
+//UPDATE ENDPOINT
+//DELETE ENDPOINT
 }
 

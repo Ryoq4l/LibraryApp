@@ -37,9 +37,9 @@ public class PatronService {
                 .collect(Collectors.toList());
     }
 
-    public PatronDto getPatronByPatronId(Long patronId) {
-        Patron patron = patronRepo.findById(patronId)
-                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
+    public PatronDto getPatronByPatronId(Long id) {
+        Patron patron = patronRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + id));
         return patronMapper.toDto(patron);
     }
 

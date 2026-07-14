@@ -15,14 +15,18 @@ import java.util.List;
 
 public class PatronController {
     private final PatronService patronService;
-
+//CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createPatron(@RequestBody PatronDto patronDto) {
         patronService.createPatron(patronDto);
     }
-
-    @GetMapping("/id/{patronId}")
+//READ ENDPOINTS
+    @GetMapping
+    public List<PatronDto> getAllPatrons(){
+        return patronService.getAllPatrons();
+    }
+    @GetMapping("/id/{id}")
     public PatronDto getPatronByPatronId(@PathVariable Long patronId) {return patronService.getPatronByPatronId(patronId);}
 
     @GetMapping("/email/{email}")
@@ -42,5 +46,12 @@ public class PatronController {
             ){
         return patronService.getPatronsByRegistrationRange(start, end);
     }
+//UPDATE ENDPOINT
+@PutMapping("{id}")
+    public PatronDto updatePatron(
+            @PathVariable Long id,
+            @RequestBody PatronDto patronDto){
+        return patronService.updatePatron(id, patronDto);
+}
 }
 

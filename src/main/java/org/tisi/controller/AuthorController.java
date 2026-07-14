@@ -14,14 +14,14 @@ import java.util.List;
 public class AuthorController {
 
     private final AuthorService authorService;
-
+//CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createAuthor(@RequestBody AuthorDto authorDto) {
 
         authorService.createAuthor(authorDto);
     }
-
+//READ ENDPOINTS
     @GetMapping
     public List<AuthorDto> getAllAuthors() {
         return authorService.getAllAuthors();
@@ -31,14 +31,14 @@ public class AuthorController {
     public AuthorDto getAuthorById(@PathVariable Long id) {
         return authorService.getAuthorById(id);
     }
-
+//UPDATE ENDPOINT
     @PutMapping("/{id}")
     public AuthorDto updateAuthor(
             @PathVariable Long id,
             @RequestBody AuthorDto authorDto) {
         return authorService.updateAuthor(id, authorDto);
     }
-
+//DELETE ENDPOINT
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAuthor(@PathVariable Long id) {
