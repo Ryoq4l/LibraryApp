@@ -15,7 +15,7 @@ public record BookSearchCriteria (
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
         LocalDate borrowedFrom,
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-        LocalDate borroweTo
+        LocalDate borrowedTo
 ){
     public boolean isEmpty() {
         return title == null && authorName == null && isbn == null
