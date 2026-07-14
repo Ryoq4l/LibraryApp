@@ -24,6 +24,7 @@ public class BorrowService {
     private final BookRepository bookRepo;
     private final BorrowMapper borrowMapper;
 
+    //CREATE
     @Transactional
     public void createBorrowRecord(BorrowDto borrowDto) {
         Book book = bookRepo.findById(borrowDto.bookId()).orElseThrow();
@@ -40,6 +41,7 @@ public class BorrowService {
         borrowRepo.save(borrowRecord);
     }
 
+    //READ
     public List<BorrowDto> getBorrowRecordsByPatronId(Long patronId) {
         patronRepo.findById(patronId)
                 .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
@@ -48,5 +50,6 @@ public class BorrowService {
                 .map(borrowMapper::toDto)
                 .collect(Collectors.toList());
     }
+    //UPDATE
 
 }
