@@ -40,6 +40,11 @@ public class BookController {
     public List<BookDto> searchBooksByTitle(@RequestParam String title) {
         return bookService.searchBooksByTitle(title);
     }
+    @GetMapping("/by-author/{authorId}")
+    public List<BookDto> getBooksByAuthorId(@PathVariable Long authorId) {
+        return bookService.getBooksByAuthorId(authorId);
+    }
+
 //UPDATE ENDPOINT
 //DELETE ENDPOINT
 }
