@@ -2,8 +2,6 @@ package org.tisi.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.tisi.model.BorrowRecord;
-import org.tisi.model.Patron;
 import org.tisi.service.BookService;
 import org.springframework.web.bind.annotation.*;
 import org.tisi.dto.BookDto;
@@ -43,6 +41,13 @@ public class BookController {
     @GetMapping("/by-author/{authorId}")
     public List<BookDto> getBooksByAuthorId(@PathVariable Long authorId) {
         return bookService.getBooksByAuthorId(authorId);
+    }
+    @GetMapping("/publication-year-range")
+    public List<BookDto> getBooksByPublicationYearRange(
+            @RequestParam int startY,
+            @RequestParam int endY
+    ) {
+        return bookService.getBooksByPublicationRange(startY, endY);
     }
 
 //UPDATE ENDPOINT
