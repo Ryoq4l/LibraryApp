@@ -27,6 +27,20 @@ public class BorrowController {
     public List<BorrowDto> getBorrowRecordsByPatronId(@PathVariable Long patronId) {
         return borrowService.getBorrowRecordsByPatronId(patronId);
     }
-//UPDATE ENDPOINT
-//DELETE ENDPOINT
+    @GetMapping("/patrons/name/{patronName}")
+    public List<BorrowDto> getBorrowRecordsByPatronName(@PathVariable String patronName) {
+        return borrowService.getBorrowRecordsByPatronName(patronName);
+    }
+    //UPDATE ENDPOINT
+    @PutMapping("/return/{borrowRecordId}")
+    public BorrowDto returnBook(@PathVariable Long borrowRecordId) {
+        return borrowService.returnBook(borrowRecordId);
+    }
+
+    //DELETE ENDPOINT
+    @DeleteMapping("/{borrowRecordId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBorrowRecord(@PathVariable Long borrowRecordId) {
+        borrowService.deleteBorrowRecord(borrowRecordId);
+    }
 }
