@@ -1,6 +1,5 @@
 package org.tisi.repository;
 
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.tisi.model.Book;
@@ -15,5 +14,7 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
     List<Book> findByTitleContainingIgnoreCase(String title);
 @EntityGraph(value = "book.authors", type = EntityGraph.EntityGraphType.LOAD)
     List<Book>findDistinctByAuthorId(Long authorId);
+    List<Book> findByPublicationBetween(Integer startY, Integer endY);
+
 
 }
