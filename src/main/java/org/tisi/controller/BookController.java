@@ -17,21 +17,23 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final BorrowService borrowService;
-//CREATE ENDPOINT
+
+    //CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createBook(@RequestBody BookDto bookDto) {
         bookService.createBook(bookDto);
     }
-//READ ENDPOINTS
+
+    //READ ENDPOINTS
     @GetMapping
     public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @GetMapping("/{id}")
-    public BookDto getBookById(@PathVariable Long id) {
-        return bookService.getBookById(id);
+    @GetMapping("/{bookId}")
+    public BookDto getBookById(@PathVariable Long bookId) {
+        return bookService.getBookById(bookId);
     }
 
     @GetMapping("/search")
