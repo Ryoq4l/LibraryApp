@@ -37,17 +37,19 @@ public class BookService {
         bookRepo.saveAndFlush(book);
     }
 
+    public List<BookDto> getAllBooks() {
+        return bookRepo.findAll().stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     public BookDto getBookById(Long id) {
         Book book = bookRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("book not found with id: " + id));
         return bookMapper.toDto(book);
 
     }
-    public List<BookDto> getAllBooks() {
-        return bookRepo.findAll().stream()
-                .map(bookMapper::toDto)
-                .collect(Collectors.toList());
-    }
+
     public List<BookDto> searchBooksByTitle(String title) {
         if (title == null || title.trim().isEmpty()) {
             return getAllBooks();
@@ -56,6 +58,9 @@ public class BookService {
         return bookRepo.findByTitleContainingIgnoreCase(title).stream()
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());
+    }
+    public List<BookDto> getBooksWithAuthor(){
+
     }
 }
 
