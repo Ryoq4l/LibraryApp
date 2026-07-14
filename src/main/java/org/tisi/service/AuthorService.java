@@ -18,14 +18,16 @@ public class AuthorService {
     private final AuthorRepository authorRepo;
     private final AuthorMapper authorMapper;
 
+    //CREATE
     public void createAuthor(AuthorDto authorDto) {
         Author author = authorMapper.map(authorDto);
         authorRepo.save(author);
     }
 
-    public AuthorDto getAuthorById(Long id) {
-        Author author = authorRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + id));
+    //READ
+    public AuthorDto getAuthorById(Long authorId) {
+        Author author = authorRepo.findById(authorId)
+                .orElseThrow(() -> new RuntimeException("Author not found with id: " + authorId));
         return authorMapper.toDto(author);
     }
 
@@ -35,6 +37,7 @@ public class AuthorService {
                 .collect(Collectors.toList());
 
     }
+
     @Transactional
     public AuthorDto getAuthorByAuthorName(String authorName) {
         Author author = authorRepo.findByAuthorName(authorName)
@@ -42,10 +45,11 @@ public class AuthorService {
         return authorMapper.toDto(author);
     }
 
+    //UPDATE
     @Transactional
-    public AuthorDto updateAuthor(Long id, AuthorDto authorDto) {
-        Author existingAuthor = authorRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + id));
+    public AuthorDto updateAuthor(Long authorId, AuthorDto authorDto) {
+        Author existingAuthor = authorRepo.findById(authorId)
+                .orElseThrow(() -> new RuntimeException("Author not found with id: " + authorId));
 
         existingAuthor.setAuthorName(authorDto.authorName());
         existingAuthor.setBio(authorDto.bio());
@@ -54,10 +58,11 @@ public class AuthorService {
         return authorMapper.toDto(updatedAuthor);
     }
 
+    //DELETE
     @Transactional
-    public void deleteAuthor(Long id) {
-        Author author = authorRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + id));
+    public void deleteAuthor(Long authorId) {
+        Author author = authorRepo.findById(authorId)
+                .orElseThrow(() -> new RuntimeException("Author not found with id: " + authorId));
 
         if (author.getBooks() != null && !author.getBooks().isEmpty()) {
             throw new RuntimeException("Cannot delete author with existing books. " +
