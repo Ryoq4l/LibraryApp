@@ -1,13 +1,17 @@
 package org.tisi.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.tisi.dto.BookDto;
+import org.tisi.dto.criteria.BookSearchCriteria;
 import org.tisi.mapper.BookMapper;
 import org.tisi.model.Book;
 import org.tisi.model.Author;
 import org.tisi.repository.BookRepository;
 import org.tisi.repository.AuthorRepository;
+import org.tisi.specification.BookSpecification;
 
 import java.util.HashSet;
 import java.util.List;
@@ -48,27 +52,77 @@ public class BookService {
 
     }
 
-    public List<BookDto> searchBooksByTitle(String title) {
-        if (title == null || title.trim().isEmpty()) {
-            return getAllBooks();
-        }
+    public List<BookDto> getBooksByAuthorId(Long authorId) {
+        return bookRepo.findDistinctByAuthors_AuthorId(authorId).stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
-        return bookRepo.findByTitleContainingIgnoreCase(title).stream()
-                .map(bookMapper::toDto)
-                .collect(Collectors.toList());
-    }
-    public List<BookDto> getBooksByAuthorId (Long authorId){
-        return bookRepo.findDistinctByAuthorId(authorId).stream()
-                .map(bookMapper::toDto)
-                .collect(Collectors.toList());
-    }
     public List<BookDto> getBooksByPublicationRange(int startY, int endY) {
-        return bookRepo.findByPublicationBetween(startY, endY).stream()
+        return bookRepo.findByPublicationYearBetween(startY, endY).stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
 
+    public List<BookDto> searchBooks(BookSearchCriteria criteria) {
+        if (criteria == null || criteria.isEmpty()) {
+            return getAllBooks();
+        }
+
+        Specification<Book> spec = BookSpecification.buildSpecification(criteria);
+        return bookRepo.findAll(spec).stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     //UPDATE
+    @Transactional
+    public BookDto updateBook(Long bookId, BookDto bookDto) {
+        Book existingBook = bookRepo.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
+
+        if (bookDto.title() != null) {
+            existingBook.setTitle(bookDto.title());
+        }
+        if (bookDto.isbn() != null) {
+            existingBook.setIsbn(bookDto.isbn());
+        }
+        if (bookDto.publicationYear() != null) {
+            existingBook.setPublicationYear(bookDto.publicationYear());
+        }
+        if (bookDto.quantity() != null) {
+            existingBook.setQuantity(bookDto.quantity());
+            existingBook.setAvailableQuantity(bookDto.quantity());
+        }
+
+        if (bookDto.authorId() != null) {
+            Author author = authorRepo.findById(bookDto.authorId())
+                    .orElseThrow(() -> new RuntimeException("Author not found with id " + bookDto.authorId()));
+            Set<Author> authors = new HashSet<>();
+            authors.add(author);
+            existingBook.setAuthors(authors);
+        }
+
+        Book updatedBook = bookRepo.saveAndFlush(existingBook);
+        return bookMapper.toDto(updatedBook);
+    }
+
     //DELETE
+    @Transactional
+    public void deleteBook(Long bookId) {
+        Book book = bookRepo.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
+
+        boolean hasActiveBorrows = book.getBorrowRecords() != null &&
+                book.getBorrowRecords().stream()
+                        .anyMatch(record -> !record.isReturned());
+
+        if (hasActiveBorrows) {
+            throw new RuntimeException("Cannot delete book with active borrow records");
+        }
+
+        bookRepo.delete(book);
+
+    }
 }
 
