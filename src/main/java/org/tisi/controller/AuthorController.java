@@ -14,38 +14,42 @@ import java.util.List;
 public class AuthorController {
 
     private final AuthorService authorService;
-//CREATE ENDPOINT
+
+    //CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createAuthor(@RequestBody AuthorDto authorDto) {
 
         authorService.createAuthor(authorDto);
     }
-//READ ENDPOINTS
+
+    //READ ENDPOINTS
     @GetMapping
     public List<AuthorDto> getAllAuthors() {
         return authorService.getAllAuthors();
     }
 
-    @GetMapping("/{id}")
-    public AuthorDto getAuthorById(@PathVariable Long id) {
-        return authorService.getAuthorById(id);
-    }
-//UPDATE ENDPOINT
-    @PutMapping("/{id}")
-    public AuthorDto updateAuthor(
-            @PathVariable Long id,
-            @RequestBody AuthorDto authorDto) {
-        return authorService.updateAuthor(id, authorDto);
-    }
-//DELETE ENDPOINT
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAuthor(@PathVariable Long id) {
-        authorService.deleteAuthor(id);
+    @GetMapping("/{authorId}")
+    public AuthorDto getAuthorById(@PathVariable Long authorId) {
+        return authorService.getAuthorById(authorId);
     }
 
-    @GetMapping("by-name/{authorName}")
+    //UPDATE ENDPOINT
+    @PutMapping("/{authorId}")
+    public AuthorDto updateAuthor(
+            @PathVariable Long authorId,
+            @RequestBody AuthorDto authorDto) {
+        return authorService.updateAuthor(authorId, authorDto);
+    }
+
+    //DELETE ENDPOINT
+    @DeleteMapping("/{authorId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAuthor(@PathVariable Long authorId) {
+        authorService.deleteAuthor(authorId);
+    }
+
+    @GetMapping("/by-name/{authorName}")
     public AuthorDto getAuthorByAuthorName(@PathVariable String authorName) {
         return authorService.getAuthorByAuthorName(authorName);
     }
