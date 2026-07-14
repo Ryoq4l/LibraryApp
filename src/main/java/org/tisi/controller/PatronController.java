@@ -18,6 +18,10 @@ public class PatronController {
     public void createPatron(@RequestBody PatronDto patronDto) {
         patronService.createPatron(patronDto);
     }
+    @GetMapping("/email/{email}")
+    public PatronDto getPatronByEmail(@PathVariable String email) {
+        return patronService.getPatronByEmail(email);
+    }
 
 
 }
