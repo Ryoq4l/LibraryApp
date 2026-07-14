@@ -31,7 +31,7 @@ public class Patron {
     private String phoneNumber;
 
     @CreationTimestamp
-    @Column(name = "registrartion_date")
+    @Column(name = "registration_date")
     private LocalDate registrationDate;
 
     @OneToMany(mappedBy = "patron", fetch = FetchType.LAZY)
