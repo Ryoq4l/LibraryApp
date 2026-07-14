@@ -15,19 +15,24 @@ import java.util.List;
 
 public class PatronController {
     private final PatronService patronService;
-//CREATE ENDPOINT
+
+    //CREATE ENDPOINT
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createPatron(@RequestBody PatronDto patronDto) {
         patronService.createPatron(patronDto);
     }
-//READ ENDPOINTS
+
+    //READ ENDPOINTS
     @GetMapping
-    public List<PatronDto> getAllPatrons(){
+    public List<PatronDto> getAllPatrons() {
         return patronService.getAllPatrons();
     }
-    @GetMapping("/id/{id}")
-    public PatronDto getPatronByPatronId(@PathVariable Long patronId) {return patronService.getPatronByPatronId(patronId);}
+
+    @GetMapping("/id/{patronId}")
+    public PatronDto getPatronByPatronId(@PathVariable Long patronId) {
+        return patronService.getPatronByPatronId(patronId);
+    }
 
     @GetMapping("/email/{email}")
     public PatronDto getPatronByEmail(@PathVariable String email) {
@@ -35,23 +40,37 @@ public class PatronController {
     }
 
     @GetMapping("/phone/{phoneNumber}")
-    public PatronDto getPatronsByPhoneNumber(@PathVariable String phoneNumber) {return patronService.getPatronByPhoneNumber(phoneNumber);}
+    public PatronDto getPatronsByPhoneNumber(@PathVariable String phoneNumber) {
+        return patronService.getPatronByPhoneNumber(phoneNumber);
+    }
 
     @GetMapping("/patron-name/{patronName}")
-    public PatronDto getPatronByPatronName(@PathVariable String patronName) {return patronService.getPatronByPatronName(patronName);}
+    public PatronDto getPatronByPatronName(@PathVariable String patronName) {
+        return patronService.getPatronByPatronName(patronName);
+    }
+
     @GetMapping("/registration-range")
     public List<PatronDto> getPatronsByRegistrationRange(
             @RequestParam LocalDate start,
             @RequestParam LocalDate end
-            ){
+    ) {
         return patronService.getPatronsByRegistrationRange(start, end);
     }
-//UPDATE ENDPOINT
-@PutMapping("{id}")
+
+    //UPDATE ENDPOINT
+    @PutMapping("/{patronId}")
     public PatronDto updatePatron(
-            @PathVariable Long id,
-            @RequestBody PatronDto patronDto){
-        return patronService.updatePatron(id, patronDto);
-}
+            @PathVariable Long patronId,
+            @RequestBody PatronDto patronDto) {
+        return patronService.updatePatron(patronId, patronDto);
+    }
+
+    //DELETE ENDPOINT
+    @DeleteMapping("/{patronId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePatron(@PathVariable Long patronId) {
+        patronService.deletePatron(patronId);
+    }
+
 }
 
