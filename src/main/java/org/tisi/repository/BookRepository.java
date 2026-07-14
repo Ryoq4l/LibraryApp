@@ -11,8 +11,9 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
-    @EntityGraph(attributePaths = {"authors", "borrowRecords"})
-    List<Book> findAll(Specification<Book> spec);
+
     List<Book> findByTitleContainingIgnoreCase(String title);
+@EntityGraph(value = "book.authors", type = EntityGraph.EntityGraphType.LOAD)
+    List<Book>findDistinctByAuthorId(Long authorId);
 
 }
