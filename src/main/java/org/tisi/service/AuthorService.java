@@ -35,6 +35,12 @@ public class AuthorService {
                 .collect(Collectors.toList());
 
     }
+    @Transactional
+    public AuthorDto getAuthorByAuthorName(String authorName) {
+        Author author = authorRepo.findByAuthorName(authorName)
+                .orElseThrow(() -> new RuntimeException("Author not found with name: " + authorName));
+        return authorMapper.toDto(author);
+    }
 
     @Transactional
     public AuthorDto updateAuthor(Long id, AuthorDto authorDto) {
