@@ -37,9 +37,9 @@ public class PatronService {
                 .collect(Collectors.toList());
     }
 
-    public PatronDto getPatronByPatronId(Long id) {
-        Patron patron = patronRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + id));
+    public PatronDto getPatronByPatronId(Long patronId) {
+        Patron patron = patronRepo.findById(patronId)
+                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
         return patronMapper.toDto(patron);
     }
 
@@ -69,9 +69,9 @@ public class PatronService {
 
     //UPDATE
     @Transactional
-    public PatronDto updatePatron(Long id, PatronDto patronDto) {
-        Patron existingPatron = patronRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + id));
+    public PatronDto updatePatron(Long patronId, PatronDto patronDto) {
+        Patron existingPatron = patronRepo.findById(patronId)
+                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
 
         existingPatron.setPatronName(patronDto.patronName());
         existingPatron.setEmail(patronDto.email());
@@ -80,4 +80,12 @@ public class PatronService {
         Patron updatedPatron = patronRepo.saveAndFlush(existingPatron);
         return patronMapper.toDto(updatedPatron);
     }
+    //DELETE
+    @Transactional
+public void deletePatron(Long patronId){
+        Patron patron = patronRepo.findById(patronId)
+                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
+
+        patronRepo.delete(patron);
+}
 }
