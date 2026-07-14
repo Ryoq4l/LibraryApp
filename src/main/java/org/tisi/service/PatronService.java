@@ -80,12 +80,15 @@ public class PatronService {
         Patron updatedPatron = patronRepo.saveAndFlush(existingPatron);
         return patronMapper.toDto(updatedPatron);
     }
+
     //DELETE
     @Transactional
-public void deletePatron(Long patronId){
+    public void deletePatron(Long patronId) {
         Patron patron = patronRepo.findById(patronId)
                 .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
-
+        if (patron.getBorrowRecords() == null && patron.getBorrowRecords().isEmpty()) {
+            throw new RuntimeException("Cannot delete user with borrow records");
+        }
         patronRepo.delete(patron);
-}
+    }
 }
