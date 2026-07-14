@@ -17,6 +17,7 @@ public interface PatronRepository extends JpaRepository<Patron, Long> {
     Optional<Patron> findByEmail(String email);
 
     boolean existsByEmail(String email);
+
     Optional<Patron> findById(String patronId);
 
     Optional<Patron> findByPhoneNumber(String phoneNumber);
@@ -25,4 +26,4 @@ public interface PatronRepository extends JpaRepository<Patron, Long> {
 
     List<Patron> getPatronsByRegistrationBetween(LocalDate start, LocalDate end);
 
-    }
+}
