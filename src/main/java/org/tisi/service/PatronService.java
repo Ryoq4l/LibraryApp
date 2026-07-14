@@ -9,6 +9,7 @@ import org.tisi.model.Author;
 import org.tisi.model.Patron;
 import org.tisi.repository.PatronRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,9 +33,29 @@ public class PatronService {
                 .map(patronMapper::toDto)
                 .collect(Collectors.toList());
     }
+    public PatronDto getPatronByPatronId(Long patronId) {
+        Patron patron = patronRepo.findById(patronId)
+                .orElseThrow(() -> new RuntimeException("Patron not found with id: " + patronId));
+        return patronMapper.toDto(patron);
+    }
     public PatronDto getPatronByEmail(String email) {
         Patron patron = patronRepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Patron not found with email: " + email));
         return patronMapper.toDto(patron);
+    }
+    public PatronDto getPatronByPhoneNumber(String phoneNumber) {
+        Patron patron = patronRepo.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new RuntimeException("Patron not found with number: " + phoneNumber));
+        return patronMapper.toDto(patron);
+    }
+    public PatronDto getPatronByPatronName(String patronName) {
+        Patron patron = patronRepo.findByPatronName(patronName)
+                .orElseThrow(() -> new RuntimeException("Patron not found with name: " + patronName));
+        return patronMapper.toDto(patron);
+    }
+    public List<PatronDto> getPatronsByRegistrationRange(LocalDate start, LocalDate end){
+return patronRepo.getPatronsByRegistrationBetween(start, end).stream()
+        .map(patronMapper::toDto)
+        .collect(Collectors.toList());
     }
 }
