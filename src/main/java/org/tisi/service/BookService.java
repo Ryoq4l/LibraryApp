@@ -8,8 +8,6 @@ import org.tisi.model.Book;
 import org.tisi.model.Author;
 import org.tisi.repository.BookRepository;
 import org.tisi.repository.AuthorRepository;
-import org.tisi.repository.BorrowRepository;
-import org.tisi.repository.PatronRepository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -64,6 +62,12 @@ public class BookService {
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());
     }
+    public List<BookDto> getBooksByPublicationRange(int startY, int endY) {
+        return bookRepo.findByPublicationBetween(startY, endY).stream()
+                .map(bookMapper::toDto)
+                .toList();
+    }
+
     //UPDATE
     //DELETE
 }
