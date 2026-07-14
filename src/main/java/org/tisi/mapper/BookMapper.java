@@ -20,6 +20,7 @@ public class BookMapper {
                 .availableQuantity(availableQuantity)
                 .isbn(bookDto.isbn())
                 .title(bookDto.title())
+                .publicationYear(bookDto.publicationYear())
                 .authors(authors)
                 .build();
     }
