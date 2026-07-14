@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.tisi.dto.PatronDto;
 import org.tisi.service.PatronService;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/patrons")
 @RequiredArgsConstructor
@@ -18,11 +21,26 @@ public class PatronController {
     public void createPatron(@RequestBody PatronDto patronDto) {
         patronService.createPatron(patronDto);
     }
+
+    @GetMapping("/id/{patronId}")
+    public PatronDto getPatronByPatronId(@PathVariable Long patronId) {return patronService.getPatronByPatronId(patronId);}
+
     @GetMapping("/email/{email}")
     public PatronDto getPatronByEmail(@PathVariable String email) {
         return patronService.getPatronByEmail(email);
     }
 
+    @GetMapping("/phone/{phoneNumber}")
+    public PatronDto getPatronsByPhoneNumber(@PathVariable String phoneNumber) {return patronService.getPatronByPhoneNumber(phoneNumber);}
 
+    @GetMapping("/patron-name/{patronName}")
+    public PatronDto getPatronByPatronName(@PathVariable String patronName) {return patronService.getPatronByPatronName(patronName);}
+    @GetMapping("/registration-range")
+    public List<PatronDto> getPatronsByRegistrationRange(
+            @RequestParam LocalDate start,
+            @RequestParam LocalDate end
+            ){
+        return patronService.getPatronsByRegistrationRange(start, end);
+    }
 }
 
