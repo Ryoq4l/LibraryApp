@@ -22,10 +22,9 @@ import java.util.stream.Collectors;
 public class BookService {
     private final BookRepository bookRepo;
     private final AuthorRepository authorRepo;
-    private final PatronRepository patronRepo;
-    private final BorrowRepository borrowRecordRepo;
     private final BookMapper bookMapper;
 
+    //CREATE
     public void createBook(BookDto bookDto) {
 
         Author author = authorRepo.findById(bookDto.authorId())
@@ -37,15 +36,16 @@ public class BookService {
         bookRepo.saveAndFlush(book);
     }
 
+    //READ
     public List<BookDto> getAllBooks() {
         return bookRepo.findAll().stream()
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public BookDto getBookById(Long id) {
-        Book book = bookRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("book not found with id: " + id));
+    public BookDto getBookById(Long bookId) {
+        Book book = bookRepo.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("book not found with id: " + bookId));
         return bookMapper.toDto(book);
 
     }
@@ -59,8 +59,12 @@ public class BookService {
                 .map(bookMapper::toDto)
                 .collect(Collectors.toList());
     }
-    public List<BookDto> getBooksWithAuthor(){
-
+    public List<BookDto> getBooksByAuthorId (Long authorId){
+        return bookRepo.findDistinctByAuthorId(authorId).stream()
+                .map(bookMapper::toDto)
+                .collect(Collectors.toList());
     }
+    //UPDATE
+    //DELETE
 }
 
