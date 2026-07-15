@@ -13,8 +13,8 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
 
     List<Book> findByTitleContainingIgnoreCase(String title);
 @EntityGraph(value = "book.authors", type = EntityGraph.EntityGraphType.LOAD)
-    List<Book>findDistinctByAuthorId(Long authorId);
-    List<Book> findByPublicationBetween(Integer startY, Integer endY);
+    List<Book>findDistinctByAuthors_AuthorId(Long authorId);
+    List<Book> findByPublicationYearBetween(Integer startY, Integer endY);
 
 
 }

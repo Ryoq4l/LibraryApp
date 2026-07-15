@@ -3,10 +3,8 @@ package org.tisi.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.tisi.dto.AuthorDto;
 import org.tisi.dto.PatronDto;
 import org.tisi.mapper.PatronMapper;
-import org.tisi.model.Author;
 import org.tisi.model.Patron;
 import org.tisi.repository.PatronRepository;
 
@@ -62,7 +60,7 @@ public class PatronService {
     }
 
     public List<PatronDto> getPatronsByRegistrationRange(LocalDate start, LocalDate end) {
-        return patronRepo.getPatronsByRegistrationBetween(start, end).stream()
+        return patronRepo.getPatronsByRegistrationDateBetween(start, end).stream()
                 .map(patronMapper::toDto)
                 .collect(Collectors.toList());
     }
