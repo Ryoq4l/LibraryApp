@@ -2,6 +2,8 @@ package org.tisi.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.tisi.dto.PatronDto;
 import org.tisi.mapper.PatronMapper;
@@ -29,10 +31,9 @@ public class PatronService {
     }
 
     //READ
-    public List<PatronDto> getAllPatrons() {
-        return patronRepo.findAll().stream()
-                .map(patronMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<PatronDto> getAllPatrons(Pageable pageable) {
+        return patronRepo.findAll(pageable)
+                .map(patronMapper::toDto);
     }
 
     public PatronDto getPatronByPatronId(Long patronId) {

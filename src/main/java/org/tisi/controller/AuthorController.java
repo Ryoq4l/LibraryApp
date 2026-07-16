@@ -1,9 +1,12 @@
 package org.tisi.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.tisi.dto.AuthorDto;
+import org.tisi.exceptions.GenericException;
 import org.tisi.service.AuthorService;
 
 import java.util.List;
@@ -25,8 +28,8 @@ public class AuthorController {
 
     //READ ENDPOINTS
     @GetMapping
-    public List<AuthorDto> getAllAuthors() {
-        return authorService.getAllAuthors();
+    public Page<AuthorDto> getAllAuthors(Pageable pageable) {
+        return authorService.getAllAuthors(pageable);
     }
 
     @GetMapping("/{authorId}")
@@ -53,4 +56,6 @@ public class AuthorController {
     public AuthorDto getAuthorByAuthorName(@PathVariable String authorName) {
         return authorService.getAuthorByAuthorName(authorName);
     }
+
+
 }

@@ -2,10 +2,14 @@ package org.tisi.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.tisi.dto.BookDto;
 import org.tisi.dto.criteria.BookSearchCriteria;
+import org.tisi.exceptions.BusinessException;
+import org.tisi.exceptions.ResourceNotFoundException;
 import org.tisi.mapper.BookMapper;
 import org.tisi.model.Book;
 import org.tisi.model.Author;
@@ -30,7 +34,7 @@ public class BookService {
     public void createBook(BookDto bookDto) {
 
         Author author = authorRepo.findById(bookDto.authorId())
-                .orElseThrow(() -> new RuntimeException("Author not found with id " + bookDto.authorId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found with id " + bookDto.authorId()));
         Set<Author> authors = new HashSet<>();
         authors.add(author);
         Book book = bookMapper.map(bookDto, authors);
@@ -39,15 +43,14 @@ public class BookService {
     }
 
     //READ
-    public List<BookDto> getAllBooks() {
-        return bookRepo.findAll().stream()
-                .map(bookMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<BookDto> getAllBooks(Pageable pageable) {
+        return bookRepo.findAll(pageable)
+                .map(bookMapper::toDto);
     }
 
     public BookDto getBookById(Long bookId) {
         Book book = bookRepo.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("book not found with id: " + bookId));
+                .orElseThrow(() -> new ResourceNotFoundException("book not found with id: " + bookId));
         return bookMapper.toDto(book);
 
     }
@@ -64,22 +67,19 @@ public class BookService {
                 .toList();
     }
 
-    public List<BookDto> searchBooks(BookSearchCriteria criteria) {
+    public Page<BookDto> searchBooks(BookSearchCriteria criteria, Pageable pageable) {
         if (criteria == null || criteria.isEmpty()) {
-            return getAllBooks();
+            return bookRepo.findAll(pageable).map(bookMapper::toDto);
         }
-
         Specification<Book> spec = BookSpecification.buildSpecification(criteria);
-        return bookRepo.findAll(spec).stream()
-                .map(bookMapper::toDto)
-                .collect(Collectors.toList());
+        return bookRepo.findAll(spec, pageable).map(bookMapper::toDto);
     }
 
     //UPDATE
     @Transactional
     public BookDto updateBook(Long bookId, BookDto bookDto) {
         Book existingBook = bookRepo.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + bookId));
 
         if (bookDto.title() != null) {
             existingBook.setTitle(bookDto.title());
@@ -97,7 +97,7 @@ public class BookService {
 
         if (bookDto.authorId() != null) {
             Author author = authorRepo.findById(bookDto.authorId())
-                    .orElseThrow(() -> new RuntimeException("Author not found with id " + bookDto.authorId()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Author not found with id " + bookDto.authorId()));
             Set<Author> authors = new HashSet<>();
             authors.add(author);
             existingBook.setAuthors(authors);
@@ -111,14 +111,14 @@ public class BookService {
     @Transactional
     public void deleteBook(Long bookId) {
         Book book = bookRepo.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found with id: " + bookId));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + bookId));
 
         boolean hasActiveBorrows = book.getBorrowRecords() != null &&
                 book.getBorrowRecords().stream()
                         .anyMatch(record -> !record.isReturned());
 
         if (hasActiveBorrows) {
-            throw new RuntimeException("Cannot delete book with active borrow records");
+            throw new BusinessException("Cannot delete book with active borrow records");
         }
 
         bookRepo.delete(book);

@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.tisi.dto.BookDto;
@@ -50,8 +52,8 @@ public class BookController {
                     content = @Content(schema = @Schema(implementation = BookDto.class)))
     })
     @GetMapping
-    public List<BookDto> getAllBooks() {
-        return bookService.getAllBooks();
+    public Page<BookDto> getAllBooks(Pageable pageable) {
+        return bookService.getAllBooks(pageable);
     }
 
     @Operation(
@@ -115,8 +117,11 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Invalid search parameters")
     })
     @GetMapping("/search")
-    public List<BookDto> searchBooks(@Valid @ModelAttribute BookSearchCriteria criteria) {
-        return bookService.searchBooks(criteria);
+    public Page<BookDto> searchBooks(@Valid @ModelAttribute
+                                     BookSearchCriteria criteria,
+                                     Pageable pageable
+    ) {
+        return bookService.searchBooks(criteria, pageable);
     }
 
     @Operation(

@@ -1,0 +1,180 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: your_name
+      changes:
+        - createTable:
+            tableName: author
+            columns:
+              - column:
+                  name: author_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: biography
+                  type: VARCHAR(255)
+
+  - changeSet:
+      id: 2
+      author: your_name
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: bookid
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: isbn
+                  type: VARCHAR(13)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: publication_year
+                  type: INT
+              - column:
+                  name: quantity
+                  type: INT
+              - column:
+                  name: available_quantity
+                  type: INT
+
+  - changeSet:
+      id: 3
+      author: your_name
+      changes:
+        - createTable:
+            tableName: patron
+            columns:
+              - column:
+                  name: patron_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: patron_name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: phone
+                  type: VARCHAR(255)
+              - column:
+                  name: registration_date
+                  type: DATE
+
+  - changeSet:
+      id: 4
+      author: your_name
+      changes:
+        - createTable:
+            tableName: borrow_record
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: book_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: patron_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: borrow_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: due_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: return_date
+                  type: DATE
+              - column:
+                  name: is_returned
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 5
+      author: your_name
+      changes:
+        - createTable:
+            tableName: book_author
+            columns:
+              - column:
+                  name: book_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: book_author
+            columnNames: book_id, author_id
+            constraintName: pk_book_author
+
+  - changeSet:
+      id: 6
+      author: your_name
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: borrow_record
+            baseColumnNames: book_id
+            referencedTableName: book
+            referencedColumnNames: bookid
+            constraintName: fk_borrow_record_book
+        - addForeignKeyConstraint:
+            baseTableName: borrow_record
+            baseColumnNames: patron_id
+            referencedTableName: patron
+            referencedColumnNames: patron_id
+            constraintName: fk_borrow_record_patron
+        - addForeignKeyConstraint:
+            baseTableName: book_author
+            baseColumnNames: book_id
+            referencedTableName: book
+            referencedColumnNames: bookid
+            constraintName: fk_book_author_book
+        - addForeignKeyConstraint:
+            baseTableName: book_author
+            baseColumnNames: author_id
+            referencedTableName: author
+            referencedColumnNames: author_id
+            constraintName: fk_book_author_author

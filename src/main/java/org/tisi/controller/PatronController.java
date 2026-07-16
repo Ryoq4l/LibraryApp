@@ -1,6 +1,8 @@
 package org.tisi.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.tisi.dto.PatronDto;
@@ -25,8 +27,8 @@ public class PatronController {
 
     //READ ENDPOINTS
     @GetMapping
-    public List<PatronDto> getAllPatrons() {
-        return patronService.getAllPatrons();
+    public Page<PatronDto> getAllPatrons(Pageable pageable) {
+        return patronService.getAllPatrons(pageable);
     }
 
     @GetMapping("/id/{patronId}")
